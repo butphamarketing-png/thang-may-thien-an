@@ -16,11 +16,13 @@ const files = (await readdir(imagesDir))
 
 const lines = files.map((f) => `  "${f}",`).join("\n");
 const content = `/** Auto-listed gallery images from public/images (*.jpg). Regenerate when adding photos. */
+import { publicUrl } from "@/lib/public-url";
+
 export const GALLERY_IMAGE_FILES = [
 ${lines}
 ] as const;
 
-export const GALLERY_IMAGES = GALLERY_IMAGE_FILES.map((f) => \`/images/\${f}\` as const);
+export const GALLERY_IMAGES = GALLERY_IMAGE_FILES.map((f) => publicUrl(\`images/\${f}\`));
 
 export function galleryAt(index: number): string {
   return GALLERY_IMAGES[index % GALLERY_IMAGES.length] ?? GALLERY_IMAGES[0]!;

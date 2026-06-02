@@ -1,6 +1,7 @@
 import { PRODUCTS } from "@/data/products";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { LazyImage } from "@/components/ui/lazy-image";
 import { Link } from "wouter";
 
 export function ProductsSectionPreview() {
@@ -27,13 +28,13 @@ export function ProductsSectionPreview() {
               key={p.slug}
               className="overflow-hidden border-none shadow-lg hover:shadow-xl transition-shadow group h-full flex flex-col"
             >
-              <div className="aspect-[3/4] relative overflow-hidden bg-primary/5">
-                <img
+              <div className="relative aspect-[3/4] overflow-hidden">
+                <LazyImage
                   src={p.image}
                   alt={p.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="absolute inset-0 group-hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-70" />
+                <div className="absolute inset-0 z-10 pointer-events-none bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-70" />
               </div>
               <CardContent className="p-6 bg-white flex flex-col flex-grow">
                 <h3 className="text-xl font-bold text-primary mb-2">{p.title}</h3>

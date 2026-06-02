@@ -1,4 +1,6 @@
 ﻿/** Auto-listed gallery images from public/images (*.jpg). Regenerate when adding photos. */
+import { publicUrl } from "@/lib/public-url";
+
 export const GALLERY_IMAGE_FILES = [
   "1780396315511_2301171266420432890_2301171266420432890_b480b4a28794f69b0341f7a30ed6671f.jpg",
   "1780396315982_2301171266420432890_2301171266420432890_d2e932932d42258490e0cc1656d8aac1.jpg",
@@ -43,7 +45,7 @@ export const GALLERY_IMAGE_FILES = [
   "1780396397050_2301171266420432890_2301171266420432890_0c1ee3036995f85c1878345d43c528ad.jpg",
 ] as const;
 
-export const GALLERY_IMAGES = GALLERY_IMAGE_FILES.map((f) => /images/ as const);
+export const GALLERY_IMAGES = GALLERY_IMAGE_FILES.map((f) => publicUrl(`images/${f}`));
 
 export function galleryAt(index: number): string {
   return GALLERY_IMAGES[index % GALLERY_IMAGES.length] ?? GALLERY_IMAGES[0]!;
