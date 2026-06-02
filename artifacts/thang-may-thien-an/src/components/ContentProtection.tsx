@@ -1,7 +1,10 @@
+import { useLocation } from "wouter";
 import { useContentProtection } from "@/hooks/use-content-protection";
 
-/** Active in production builds only. */
+/** Bật trên production; tắt tại /admin để quản trị vẫn dùng DevTools được. */
 export function ContentProtection() {
-  useContentProtection(import.meta.env.PROD);
+  const [location] = useLocation();
+  const isAdminRoute = location.startsWith("/admin");
+  useContentProtection(import.meta.env.PROD && !isAdminRoute);
   return null;
 }

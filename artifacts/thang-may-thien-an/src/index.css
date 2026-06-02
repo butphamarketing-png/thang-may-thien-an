@@ -123,6 +123,36 @@
     background-color: hsl(216 60% 10%);
     color: white;
   }
+
+  html.content-protected body {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  html.content-protected input,
+  html.content-protected textarea,
+  html.content-protected select,
+  html.content-protected [contenteditable="true"],
+  html.content-protected [data-allow-copy] {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+
+  html.content-protected img {
+    -webkit-user-drag: none;
+    user-drag: none;
+    pointer-events: auto;
+  }
+
+  html.devtools-detected::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    pointer-events: none;
+    background: rgba(7, 20, 39, 0.35);
+    backdrop-filter: blur(2px);
+  }
 }
 
 @layer utilities {
