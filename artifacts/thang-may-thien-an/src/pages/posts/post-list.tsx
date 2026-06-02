@@ -1,4 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { scrollToTop } from "@/lib/scroll-to-top";
 import { Link } from "wouter";
 import type { Post } from "@/data/posts";
 
@@ -38,7 +39,7 @@ export function PostList({
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
           {posts.map((p) => (
             <Link key={p.slug} href={`${basePath}/${p.slug}`}>
-              <a className="group">
+              <a className="group" onClick={() => scrollToTop("instant")}>
                 <Card
                   className={
                     isDark

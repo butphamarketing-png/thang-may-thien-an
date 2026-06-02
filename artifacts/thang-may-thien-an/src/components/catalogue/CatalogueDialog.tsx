@@ -29,6 +29,21 @@ export function CatalogueDialog({ className }: { className?: string }) {
   const canPrev = spreadIndex > 0 && !turning;
   const canNext = spreadIndex < spreads - 1 && !turning;
 
+  const goPrev = () => {
+    if (!canPrev) return;
+    setDirection("prev");
+    setTurning(true);
+  };
+
+  const goNext = () => {
+    if (!canNext) return;
+    setDirection("next");
+    setTurning(true);
+  };
+
+  const navBtnClass =
+    "absolute top-1/2 z-30 -translate-y-1/2 size-11 sm:size-12 rounded-full border border-white/15 bg-primary/95 text-white shadow-lg backdrop-blur-sm hover:bg-[#0f2847] hover:scale-105 transition-all disabled:opacity-35 disabled:pointer-events-none disabled:hover:scale-100";
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -46,38 +61,30 @@ export function CatalogueDialog({ className }: { className?: string }) {
         </DialogHeader>
 
         <div className="p-6 pt-4">
-          <div className="flex items-center justify-between gap-4 mb-4">
-            <div className="text-sm text-muted-foreground">
-              Trang {spreadIndex * 2 + 1}-{Math.min(spreadIndex * 2 + 2, pages.length)}/{pages.length}
-            </div>
-            <div className="flex items-center gap-2">
-              <Button
-                variant="outline"
-                size="icon"
-                disabled={!canPrev}
-                onClick={() => {
-                  setDirection("prev");
-                  setTurning(true);
-                }}
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </Button>
-              <Button
-                variant="outline"
-                size="icon"
-                disabled={!canNext}
-                onClick={() => {
-                  setDirection("next");
-                  setTurning(true);
-                }}
-              >
-                <ChevronRight className="w-4 h-4" />
-              </Button>
-            </div>
+          <div className="mb-4 text-sm text-muted-foreground">
+            Trang {spreadIndex * 2 + 1}-{Math.min(spreadIndex * 2 + 2, pages.length)}/{pages.length}
           </div>
 
           {/* Flipbook view (2-page spread). */}
           <div className="relative rounded-xl overflow-hidden bg-[#070c14]">
+            <button
+              type="button"
+              disabled={!canPrev}
+              onClick={goPrev}
+              className={cn(navBtnClass, "left-2 sm:left-3 grid place-items-center")}
+              aria-label="Trang trước"
+            >
+              <ChevronLeft className="w-6 h-6 sm:w-7 sm:h-7" />
+            </button>
+            <button
+              type="button"
+              disabled={!canNext}
+              onClick={goNext}
+              className={cn(navBtnClass, "right-2 sm:right-3 grid place-items-center")}
+              aria-label="Trang sau"
+            >
+              <ChevronRight className="w-6 h-6 sm:w-7 sm:h-7" />
+            </button>
             <div className="[perspective:2000px]">
               <div className="relative w-full">
                 {/* Under layer (target spread) */}

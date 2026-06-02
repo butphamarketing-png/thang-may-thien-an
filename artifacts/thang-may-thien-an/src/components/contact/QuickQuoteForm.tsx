@@ -56,7 +56,7 @@ function validateQuote(form: QuoteForm): string | null {
   return null;
 }
 
-export function QuickQuoteForm() {
+export function QuickQuoteForm({ onSuccess }: { onSuccess?: () => void }) {
   const { toast } = useToast();
   const [form, setForm] = useState<QuoteForm>(initial);
   const [submitting, setSubmitting] = useState(false);
@@ -86,6 +86,7 @@ export function QuickQuoteForm() {
         description: SUCCESS_MESSAGE,
       });
       setForm(initial);
+      onSuccess?.();
     } catch {
       toast({
         title: "Gửi không thành công",

@@ -1,6 +1,7 @@
 import { NEWS_POSTS } from "@/data/posts";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { scrollToTop } from "@/lib/scroll-to-top";
 import { Link } from "wouter";
 
 const PREVIEW_COUNT = 3;
@@ -27,7 +28,12 @@ export function NewsSectionPreview() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
           {posts.map((p) => (
-            <Link key={p.slug} href={`/tin-tuc/${p.slug}`} className="group block h-full">
+            <Link
+              key={p.slug}
+              href={`/tin-tuc/${p.slug}`}
+              className="group block h-full"
+              onClick={() => scrollToTop("instant")}
+            >
               <Card className="h-full flex flex-col border-none shadow-lg hover:shadow-xl transition-shadow overflow-hidden">
                 <div className="aspect-[16/10] overflow-hidden relative bg-primary/5 shrink-0">
                   <img

@@ -47,7 +47,7 @@ function validateSurvey(form: SurveyForm): string | null {
   return null;
 }
 
-export function SurveyBookingForm() {
+export function SurveyBookingForm({ onSuccess }: { onSuccess?: () => void }) {
   const { toast } = useToast();
   const [form, setForm] = useState<SurveyForm>(initial);
   const [submitting, setSubmitting] = useState(false);
@@ -76,6 +76,7 @@ export function SurveyBookingForm() {
         description: "Thiên Ân sẽ liên hệ xác nhận lịch khảo sát tận nơi.",
       });
       setForm(initial);
+      onSuccess?.();
     } catch {
       toast({
         title: "Gửi không thành công",

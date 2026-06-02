@@ -1,6 +1,7 @@
-import type { CSSProperties, MouseEvent, ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { CalendarClock, Facebook, MessageCircle, Phone } from "lucide-react";
 import { SITE_CONTACTS } from "@/config/site";
+import { useContactModals } from "@/context/ContactModalsContext";
 import { cn } from "@/lib/utils";
 
 function ZaloIcon({ className }: { className?: string }) {
@@ -11,14 +12,13 @@ function ZaloIcon({ className }: { className?: string }) {
   );
 }
 
-function CircleBtn({
+function CircleLink({
   href,
   label,
   children,
   className,
   shakeClass = "animate-float-ring-shake-delayed",
   style,
-  onClick,
 }: {
   href: string;
   label: string;
@@ -26,15 +26,12 @@ function CircleBtn({
   className: string;
   shakeClass?: string;
   style?: CSSProperties;
-  onClick?: (e: MouseEvent<HTMLAnchorElement>) => void;
 }) {
-  const external = href.startsWith("http");
   return (
     <a
       href={href}
-      onClick={onClick}
-      target={external ? "_blank" : undefined}
-      rel={external ? "noreferrer" : undefined}
+      target="_blank"
+      rel="noreferrer"
       aria-label={label}
       title={label}
       style={style}
@@ -50,17 +47,45 @@ function CircleBtn({
   );
 }
 
+function CircleAction({
+  label,
+  children,
+  className,
+  shakeClass = "animate-float-ring-shake-delayed",
+  style,
+  onClick,
+}: {
+  label: string;
+  children: ReactNode;
+  className: string;
+  shakeClass?: string;
+  style?: CSSProperties;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={label}
+      title={label}
+      style={style}
+      className={cn(
+        "grid place-items-center size-12 rounded-full border border-white/15 backdrop-blur-md shadow-xl",
+        "transition-transform hover:scale-110 hover:shadow-2xl text-white cursor-pointer",
+        shakeClass,
+        className,
+      )}
+    >
+      {children}
+    </button>
+  );
+}
+
 export function FloatingContacts() {
-  const scrollToBooking = () => {
-    const el = document.getElementById("dat-hen");
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
+  const { openSurveyModal } = useContactModals();
 
   return (
     <>
-      {/* Trái: Hotline rung */}
       <div className="fixed z-40 left-2 sm:left-4 bottom-2 sm:bottom-4 safe-bottom">
         <a
           href={`tel:${SITE_CONTACTS.phone}`}
@@ -84,52 +109,41 @@ export function FloatingContacts() {
         </a>
       </div>
 
-      {/* Phải: Zalo, Messenger, FB, Đặt hẹn — cột dọc */}
-      <div className="fixed z-40 right-2 sm:right-4 bottom-2 sm:bottom-4 safe-bottom flex flex-col items-center gap-2.5">
-        <CircleBtn
+      <div className="fixed z-[45] right-2 sm:right-4 bottom-2 sm:bottom-4 safe-bottom flex flex-col items-center gap-2.5">
+        <CircleLink
           href={`https://zalo.me/${SITE_CONTACTS.zaloPhone}`}
           label="Chat Zalo"
           className="bg-[#0068ff] hover:bg-[#0056d6] shadow-[#0068ff]/40"
-          shakeClass="animate-float-ring-shake-delayed"
         >
           <ZaloIcon className="size-6" />
-        </CircleBtn>
+        </CircleLink>
 
-        <CircleBtn
+        <CircleLink
           href={`https://m.me/${SITE_CONTACTS.messengerPage}`}
           label="Messenger"
           className="bg-gradient-to-br from-[#00b2ff] to-[#006aff] shadow-blue-500/40"
-          shakeClass="animate-float-ring-shake-delayed"
           style={{ animationDelay: "0.2s" }}
         >
           <MessageCircle className="size-6" />
-        </CircleBtn>
+        </CircleLink>
 
-        <CircleBtn
+        <CircleLink
           href={`https://www.facebook.com/${SITE_CONTACTS.facebookPage}`}
           label="Facebook"
           className="bg-[#1877f2] hover:bg-[#166fe5] shadow-blue-600/40"
-          shakeClass="animate-float-ring-shake-delayed"
           style={{ animationDelay: "0.35s" }}
         >
           <Facebook className="size-6" />
-        </CircleBtn>
+        </CircleLink>
 
-        <CircleBtn
-          href="/#dat-hen"
-          label="Đặt hẹn & báo giá"
+        <CircleAction
+          label="Đặt lịch khảo sát"
+          onClick={openSurveyModal}
           className="bg-secondary hover:bg-secondary/90 text-white shadow-secondary/30"
-          shakeClass="animate-float-ring-shake-delayed"
           style={{ animationDelay: "0.5s" }}
-          onClick={(e) => {
-            if (window.location.pathname === "/" || window.location.pathname === "") {
-              e.preventDefault();
-              scrollToBooking();
-            }
-          }}
         >
           <CalendarClock className="size-6" />
-        </CircleBtn>
+        </CircleAction>
       </div>
     </>
   );

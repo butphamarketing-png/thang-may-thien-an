@@ -7,8 +7,11 @@ import { Link, useLocation } from "wouter";
 import { PRODUCTS } from "@/data/products";
 import { CatalogueDialog } from "@/components/catalogue/CatalogueDialog";
 import { SearchCommand } from "@/components/search/SearchCommand";
+import { useContactModals } from "@/context/ContactModalsContext";
+import { scrollToTop } from "@/lib/scroll-to-top";
 
 export function Header() {
+  const { openQuoteModal } = useContactModals();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
@@ -37,6 +40,16 @@ export function Header() {
     setMobileMenuOpen(false);
     setProductsOpen(false);
   }, [location]);
+
+  function handleQuoteClick() {
+    setMobileMenuOpen(false);
+    openQuoteModal();
+  }
+
+  function navTo(href: string) {
+    setLocation(href);
+    scrollToTop("instant");
+  }
 
   return (
     <>
@@ -73,7 +86,10 @@ export function Header() {
               if (link.name !== "Sản phẩm") {
                 return (
                   <Link key={link.name} href={link.href}>
-                    <a className="text-white/90 hover:text-secondary transition-colors text-sm font-medium uppercase tracking-wide">
+                    <a
+                      className="text-white/90 hover:text-secondary transition-colors text-sm font-medium uppercase tracking-wide"
+                      onClick={() => scrollToTop("instant")}
+                    >
                       {link.name}
                     </a>
                   </Link>
@@ -90,7 +106,7 @@ export function Header() {
                   <button
                     type="button"
                     className="text-white/90 hover:text-secondary transition-colors text-sm font-medium uppercase tracking-wide inline-flex items-center gap-1"
-                    onClick={() => setLocation(link.href)}
+                    onClick={() => navTo(link.href)}
                   >
                     {link.name} <ChevronDown className="w-4 h-4" />
                   </button>
@@ -106,7 +122,10 @@ export function Header() {
                         <div className="p-3">
                           {PRODUCTS.map((p) => (
                             <Link key={p.slug} href={`/san-pham/${p.slug}`}>
-                              <a className="block rounded-lg px-3 py-2 hover:bg-gray-50">
+                              <a
+                                className="block rounded-lg px-3 py-2 hover:bg-gray-50"
+                                onClick={() => scrollToTop("instant")}
+                              >
                                 <div className="font-semibold text-primary">{p.title}</div>
                                 <div className="text-xs text-muted-foreground mt-0.5 line-clamp-2">
                                   {p.shortDescription}
@@ -136,11 +155,13 @@ export function Header() {
               <Search className="w-4 h-4" />
             </Button>
             <CatalogueDialog />
-            <Link href="/lien-he">
-              <Button className="bg-secondary hover:bg-secondary/90 text-white font-semibold">
-                Báo giá ngay
-              </Button>
-            </Link>
+            <Button
+              type="button"
+              onClick={handleQuoteClick}
+              className="bg-secondary hover:bg-secondary/90 text-white font-semibold"
+            >
+              Báo giá ngay
+            </Button>
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -168,7 +189,10 @@ export function Header() {
                 if (link.name !== "Sản phẩm") {
                   return (
                     <Link key={link.name} href={link.href}>
-                      <a className="text-white/90 hover:text-secondary text-lg font-medium">
+                      <a
+                        className="text-white/90 hover:text-secondary text-lg font-medium"
+                        onClick={() => scrollToTop("instant")}
+                      >
                         {link.name}
                       </a>
                     </Link>
@@ -189,7 +213,10 @@ export function Header() {
                       <div className="pl-3 border-l border-white/15 space-y-2">
                         {PRODUCTS.map((p) => (
                           <Link key={p.slug} href={`/san-pham/${p.slug}`}>
-                            <a className="block text-white/80 hover:text-secondary">
+                            <a
+                              className="block text-white/80 hover:text-secondary"
+                              onClick={() => scrollToTop("instant")}
+                            >
                               {p.title}
                             </a>
                           </Link>
@@ -201,11 +228,13 @@ export function Header() {
               })}
               <div className="flex flex-col gap-4 mt-4 pt-4 border-t border-white/10">
                 <CatalogueDialog className="w-full" />
-                <Link href="/lien-he">
-                  <Button className="bg-secondary hover:bg-secondary/90 text-white w-full">
-                    Báo giá ngay
-                  </Button>
-                </Link>
+                <Button
+                  type="button"
+                  onClick={handleQuoteClick}
+                  className="bg-secondary hover:bg-secondary/90 text-white w-full"
+                >
+                  Báo giá ngay
+                </Button>
               </div>
             </div>
           </motion.div>
