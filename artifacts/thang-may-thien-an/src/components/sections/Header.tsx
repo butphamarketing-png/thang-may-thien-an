@@ -46,8 +46,20 @@ export function Header() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between">
           <Link href="/">
-            <a className="flex items-center">
-            <img src={logoImg} alt="Thang Máy Thiên Ân" className="h-14 w-14 object-contain rounded-full" />
+            <a className="flex items-center gap-3">
+              <img
+                src={logoImg}
+                alt="Thang Máy Thiên Ân"
+                className="h-14 w-14 object-contain rounded-full"
+              />
+              <div className="hidden sm:block leading-tight">
+                <div className="text-white font-bold uppercase tracking-wide">
+                  Thang Máy Thiên Ân
+                </div>
+                <div className="text-white/70 text-xs">
+                  Giải pháp thang máy toàn diện
+                </div>
+              </div>
             </a>
           </Link>
 
