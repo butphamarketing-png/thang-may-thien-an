@@ -9,7 +9,9 @@ import { HeroSlideshow } from "@/sections/hero-slideshow";
 export default function HomePage() {
   return (
     <>
-      <HeroSlideshow />
+      <div className="-mt-24 md:-mt-28">
+        <HeroSlideshow />
+      </div>
       <Stats />
       <ProductsSectionPreview />
       <WhyChooseUs />
