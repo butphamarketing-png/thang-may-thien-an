@@ -50,7 +50,8 @@
 }
 
 :root {
-  --background: 0 0% 100%;
+  /* Light foundation with premium contrast */
+  --background: 220 22% 98%;
   --foreground: 216 60% 10%;
   
   --border: 214 32% 91%;
@@ -67,23 +68,30 @@
   
   --primary: 216 60% 10%; /* Deep Navy */
   --primary-foreground: 0 0% 100%;
+  --primary-border: hsl(216 55% 18%);
   
-  --secondary: 44 57% 54%; /* Gold Accent */
+  --secondary: 44 72% 52%; /* Gold Accent (richer) */
   --secondary-foreground: 0 0% 100%;
+  --secondary-border: hsl(44 62% 44%);
   
   --muted: 210 40% 96%;
   --muted-foreground: 215 16% 47%;
+  --muted-border: hsl(var(--border));
   
   --accent: 44 57% 54%;
   --accent-foreground: 0 0% 100%;
+  --accent-border: hsl(44 45% 45%);
   
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
+  --destructive-border: hsl(0 78% 45%);
+
+  --button-outline: hsl(var(--border));
 
   --app-font-sans: 'Plus Jakarta Sans', 'Inter', sans-serif;
   --app-font-serif: Georgia, serif;
   --app-font-mono: Menlo, monospace;
-  --radius: .5rem;
+  --radius: .75rem;
 }
 
 @layer base {
@@ -95,5 +103,23 @@
   }
   html {
     scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .hover-elevate {
+    @apply shadow-sm;
+  }
+  .hover-elevate:hover {
+    transform: translateY(-1px);
+    box-shadow:
+      0 10px 30px rgba(2, 8, 23, 0.12),
+      0 2px 10px rgba(2, 8, 23, 0.08);
+  }
+  .active-elevate-2:active {
+    transform: translateY(0);
+    box-shadow:
+      0 6px 18px rgba(2, 8, 23, 0.10),
+      0 1px 6px rgba(2, 8, 23, 0.07);
   }
 }
