@@ -92,7 +92,10 @@ export function CatalogueDialog({ className }: { className?: string }) {
                       alt="Catalogue left page"
                       className="w-full h-[70vh] object-contain bg-black"
                     />
-                    <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-black/50 to-transparent" />
+                    {/* inner gutter shadow */}
+                    <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-black/55 via-black/15 to-transparent" />
+                    {/* paper edge */}
+                    <div className="pointer-events-none absolute inset-0 ring-1 ring-white/8" />
                   </div>
                   <div className="relative bg-black">
                     <img
@@ -100,13 +103,14 @@ export function CatalogueDialog({ className }: { className?: string }) {
                       alt="Catalogue right page"
                       className="w-full h-[70vh] object-contain bg-black"
                     />
-                    <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-black/50 to-transparent" />
+                    <div className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-black/55 via-black/15 to-transparent" />
+                    <div className="pointer-events-none absolute inset-0 ring-1 ring-white/8" />
                   </div>
                 </div>
 
                 {/* Spine */}
                 <div className="pointer-events-none absolute inset-y-0 left-1/2 w-[2px] -translate-x-1/2 bg-white/10" />
-                <div className="pointer-events-none absolute inset-y-0 left-1/2 w-12 -translate-x-1/2 bg-gradient-to-r from-black/55 via-transparent to-black/55 opacity-80" />
+                <div className="pointer-events-none absolute inset-y-0 left-1/2 w-14 -translate-x-1/2 bg-gradient-to-r from-black/70 via-black/5 to-black/70 opacity-90" />
 
                 {/* Top layer (current spread) */}
                 <div className="absolute inset-0 grid grid-cols-2">
@@ -117,7 +121,8 @@ export function CatalogueDialog({ className }: { className?: string }) {
                       alt="Catalogue left page"
                       className="w-full h-[70vh] object-contain bg-black"
                     />
-                    <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-black/50 to-transparent" />
+                    <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-black/55 via-black/15 to-transparent" />
+                    <div className="pointer-events-none absolute inset-0 ring-1 ring-white/10" />
                   </div>
 
                   {/* Right page turns on next; left page turns on prev */}
@@ -130,7 +135,8 @@ export function CatalogueDialog({ className }: { className?: string }) {
                           alt="Catalogue right page"
                           className="w-full h-[70vh] object-contain bg-black"
                         />
-                        <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-black/50 to-transparent" />
+                        <div className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-black/55 via-black/15 to-transparent" />
+                        <div className="pointer-events-none absolute inset-0 ring-1 ring-white/10" />
                       </div>
                     )}
 
@@ -139,9 +145,9 @@ export function CatalogueDialog({ className }: { className?: string }) {
                       <motion.div
                         className="absolute inset-0 bg-black [transform-style:preserve-3d] will-change-transform"
                         style={{ transformOrigin: "left center" }}
-                        initial={{ rotateY: 0 }}
-                        animate={{ rotateY: -180 }}
-                        transition={{ duration: 0.75, ease: "easeInOut" }}
+                        initial={{ rotateY: 0, scale: 1 }}
+                        animate={{ rotateY: -180, scale: 1.005 }}
+                        transition={{ duration: 0.92, ease: [0.2, 0.8, 0.2, 1] }}
                         onAnimationComplete={() => {
                           setSpreadIndex((s) => Math.min(spreads - 1, s + 1));
                           setTurning(false);
@@ -154,7 +160,11 @@ export function CatalogueDialog({ className }: { className?: string }) {
                             alt="Turning page"
                             className="w-full h-[70vh] object-contain bg-black"
                           />
-                          <div className="pointer-events-none absolute inset-0 bg-gradient-to-l from-black/70 via-black/10 to-transparent opacity-80" />
+                          {/* page shading + curl */}
+                          <div className="pointer-events-none absolute inset-0 bg-gradient-to-l from-black/80 via-black/15 to-transparent opacity-85" />
+                          <div className="pointer-events-none absolute inset-y-0 right-0 w-[10px] bg-white/10" />
+                          <div className="pointer-events-none absolute right-0 top-0 h-[180px] w-[180px] bg-[radial-gradient(circle_at_100%_0%,rgba(255,255,255,0.20),rgba(255,255,255,0)_60%)] opacity-70" />
+                          <div className="pointer-events-none absolute right-0 bottom-0 h-[180px] w-[180px] bg-[radial-gradient(circle_at_100%_100%,rgba(255,255,255,0.18),rgba(255,255,255,0)_60%)] opacity-60" />
                         </div>
                         {/* Back */}
                         <div className="absolute inset-0 [transform:rotateY(180deg)]">
@@ -163,8 +173,13 @@ export function CatalogueDialog({ className }: { className?: string }) {
                             alt="Turning page back"
                             className="w-full h-[70vh] object-contain bg-black"
                           />
-                          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/70 via-black/10 to-transparent opacity-80" />
+                          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/80 via-black/15 to-transparent opacity-85" />
+                          <div className="pointer-events-none absolute inset-y-0 left-0 w-[10px] bg-white/10" />
+                          <div className="pointer-events-none absolute left-0 top-0 h-[180px] w-[180px] bg-[radial-gradient(circle_at_0%_0%,rgba(255,255,255,0.20),rgba(255,255,255,0)_60%)] opacity-70" />
+                          <div className="pointer-events-none absolute left-0 bottom-0 h-[180px] w-[180px] bg-[radial-gradient(circle_at_0%_100%,rgba(255,255,255,0.18),rgba(255,255,255,0)_60%)] opacity-60" />
                         </div>
+                        {/* page thickness edge */}
+                        <div className="pointer-events-none absolute inset-y-0 left-0 w-[2px] bg-white/20" />
                       </motion.div>
                     ) : null}
                   </div>
@@ -179,9 +194,9 @@ export function CatalogueDialog({ className }: { className?: string }) {
                       <motion.div
                         className="relative bg-black [transform-style:preserve-3d] will-change-transform"
                         style={{ transformOrigin: "right center" }}
-                        initial={{ rotateY: 0 }}
-                        animate={{ rotateY: 180 }}
-                        transition={{ duration: 0.75, ease: "easeInOut" }}
+                        initial={{ rotateY: 0, scale: 1 }}
+                        animate={{ rotateY: 180, scale: 1.005 }}
+                        transition={{ duration: 0.92, ease: [0.2, 0.8, 0.2, 1] }}
                         onAnimationComplete={() => {
                           setSpreadIndex((s) => Math.max(0, s - 1));
                           setTurning(false);
@@ -194,7 +209,10 @@ export function CatalogueDialog({ className }: { className?: string }) {
                             alt="Turning page"
                             className="w-full h-[70vh] object-contain bg-black"
                           />
-                          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/70 via-black/10 to-transparent opacity-80" />
+                          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/80 via-black/15 to-transparent opacity-85" />
+                          <div className="pointer-events-none absolute inset-y-0 left-0 w-[10px] bg-white/10" />
+                          <div className="pointer-events-none absolute left-0 top-0 h-[180px] w-[180px] bg-[radial-gradient(circle_at_0%_0%,rgba(255,255,255,0.20),rgba(255,255,255,0)_60%)] opacity-70" />
+                          <div className="pointer-events-none absolute left-0 bottom-0 h-[180px] w-[180px] bg-[radial-gradient(circle_at_0%_100%,rgba(255,255,255,0.18),rgba(255,255,255,0)_60%)] opacity-60" />
                         </div>
                         {/* Back */}
                         <div className="absolute inset-0 [transform:rotateY(180deg)]">
@@ -203,8 +221,12 @@ export function CatalogueDialog({ className }: { className?: string }) {
                             alt="Turning page back"
                             className="w-full h-[70vh] object-contain bg-black"
                           />
-                          <div className="pointer-events-none absolute inset-0 bg-gradient-to-l from-black/70 via-black/10 to-transparent opacity-80" />
+                          <div className="pointer-events-none absolute inset-0 bg-gradient-to-l from-black/80 via-black/15 to-transparent opacity-85" />
+                          <div className="pointer-events-none absolute inset-y-0 right-0 w-[10px] bg-white/10" />
+                          <div className="pointer-events-none absolute right-0 top-0 h-[180px] w-[180px] bg-[radial-gradient(circle_at_100%_0%,rgba(255,255,255,0.20),rgba(255,255,255,0)_60%)] opacity-70" />
+                          <div className="pointer-events-none absolute right-0 bottom-0 h-[180px] w-[180px] bg-[radial-gradient(circle_at_100%_100%,rgba(255,255,255,0.18),rgba(255,255,255,0)_60%)] opacity-60" />
                         </div>
+                        <div className="pointer-events-none absolute inset-y-0 right-0 w-[2px] bg-white/20" />
                       </motion.div>
                       <div />
                     </motion.div>
