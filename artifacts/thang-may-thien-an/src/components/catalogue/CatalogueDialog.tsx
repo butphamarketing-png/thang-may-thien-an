@@ -3,15 +3,11 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
-import catalogueCover from "@assets/image_1780381253460.png";
+import { GALLERY_IMAGES } from "@/data/site-images";
 import { cn } from "@/lib/utils";
 
 export function CatalogueDialog({ className }: { className?: string }) {
-  // Pages for the flipbook. Replace these with real catalogue page images later.
-  const pages = useMemo(
-    () => [catalogueCover, catalogueCover, catalogueCover, catalogueCover],
-    [],
-  );
+  const pages = useMemo(() => [...GALLERY_IMAGES], []);
 
   // Spread index (2 pages per spread).
   const spreads = Math.max(1, Math.ceil(pages.length / 2));

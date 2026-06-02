@@ -1,23 +1,16 @@
-import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { PROJECT_POSTS } from "@/data/posts";
+import { SectionHeader } from "@/components/ui/section-header";
 
 export function Projects() {
   return (
-    <section id="projects" className="py-24 bg-gray-50">
+    <section id="projects" className="py-24 bg-muted/40">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-3xl md:text-4xl font-bold text-primary mb-4 uppercase"
-          >
-            Công trình tiêu biểu
-          </motion.h2>
-          <div className="w-24 h-1 bg-secondary mx-auto" />
-        </div>
+        <SectionHeader
+          title="Công trình tiêu biểu"
+          subtitle="Một số dự án thang máy đã triển khai — thi công gọn, vận hành ổn định."
+        />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {PROJECT_POSTS.slice(0, 4).map((project, idx) => (
@@ -27,7 +20,7 @@ export function Projects() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
-              className="relative overflow-hidden rounded-2xl aspect-[4/3] group"
+              className="relative overflow-hidden rounded-2xl aspect-[4/3] group shadow-md ring-1 ring-black/5"
             >
               <Link href={`/du-an/${project.slug}`}>
                 <a className="absolute inset-0">

@@ -7,6 +7,7 @@ import { ProductsSectionPreview } from "@/pages/products/products-preview";
 import { HeroSlideshow } from "@/sections/hero-slideshow";
 import { NewsSectionPreview } from "@/pages/news/news-preview";
 import { BookingQuote } from "@/components/sections/BookingQuote";
+import { GalleryShowcase } from "@/components/sections/GalleryShowcase";
 
 export default function HomePage() {
   return (
@@ -17,6 +18,7 @@ export default function HomePage() {
       <Stats />
       <ProductsSectionPreview />
       <BookingQuote />
+      <GalleryShowcase />
       <WhyChooseUs />
       <Services />
       <Projects />
