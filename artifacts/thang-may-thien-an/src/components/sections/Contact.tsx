@@ -1,11 +1,67 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
 
 export function Contact() {
+  const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [form, setForm] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    address: "",
+    elevatorType: "",
+    note: "",
+  });
+
+  const isValidEmail = useMemo(() => {
+    if (!form.email.trim()) return true;
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim());
+  }, [form.email]);
+
+  const canSubmit =
+    form.name.trim().length >= 2 &&
+    form.phone.trim().length >= 8 &&
+    isValidEmail &&
+    !isSubmitting;
+
+  async function onSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!canSubmit) {
+      toast({
+        title: "Vui lòng kiểm tra thông tin",
+        description:
+          "Họ tên (>=2 ký tự), số điện thoại (>=8 số) và email (nếu có) phải hợp lệ.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      // TODO: Kết nối Supabase để lưu lead / gửi email.
+      await new Promise((r) => setTimeout(r, 650));
+      toast({
+        title: "Đã gửi yêu cầu",
+        description: "Thiên Ân sẽ liên hệ lại sớm để tư vấn và báo giá.",
+      });
+      setForm({
+        name: "",
+        phone: "",
+        email: "",
+        address: "",
+        elevatorType: "",
+        note: "",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
   return (
     <section id="contact" className="py-24 bg-gray-50">
       <div className="container mx-auto px-4 md:px-6">
@@ -25,23 +81,60 @@ export function Contact() {
               </p>
             </div>
 
-            <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+            <form className="space-y-4" onSubmit={onSubmit}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Input placeholder="Họ và tên" className="bg-white" />
-                <Input placeholder="Số điện thoại" className="bg-white" />
+                <Input
+                  value={form.name}
+                  onChange={(e) => setForm((s) => ({ ...s, name: e.target.value }))}
+                  placeholder="Họ và tên *"
+                  className="bg-white"
+                />
+                <Input
+                  value={form.phone}
+                  onChange={(e) =>
+                    setForm((s) => ({ ...s, phone: e.target.value.replace(/[^\d+ ]/g, "") }))
+                  }
+                  placeholder="Số điện thoại *"
+                  className="bg-white"
+                />
               </div>
-              <Input placeholder="Email" type="email" className="bg-white" />
-              <Input placeholder="Địa chỉ công trình" className="bg-white" />
-              <select className="flex h-10 w-full rounded-md border border-input bg-white px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+              <Input
+                value={form.email}
+                onChange={(e) => setForm((s) => ({ ...s, email: e.target.value }))}
+                placeholder="Email"
+                type="email"
+                className="bg-white"
+              />
+              <Input
+                value={form.address}
+                onChange={(e) => setForm((s) => ({ ...s, address: e.target.value }))}
+                placeholder="Địa chỉ công trình"
+                className="bg-white"
+              />
+              <select
+                value={form.elevatorType}
+                onChange={(e) => setForm((s) => ({ ...s, elevatorType: e.target.value }))}
+                className="flex h-10 w-full rounded-md border border-input bg-white px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              >
                 <option value="">Chọn loại thang máy</option>
                 <option value="home">Thang máy gia đình</option>
                 <option value="commercial">Thang máy tải khách</option>
                 <option value="freight">Thang máy tải hàng</option>
                 <option value="escalator">Thang cuốn</option>
               </select>
-              <Textarea placeholder="Ghi chú thêm" className="bg-white min-h-[120px]" />
-              <Button size="lg" className="w-full bg-secondary hover:bg-secondary/90 text-white text-lg">
-                Gửi yêu cầu tư vấn
+              <Textarea
+                value={form.note}
+                onChange={(e) => setForm((s) => ({ ...s, note: e.target.value }))}
+                placeholder="Ghi chú thêm"
+                className="bg-white min-h-[120px]"
+              />
+              <Button
+                size="lg"
+                type="submit"
+                disabled={!canSubmit}
+                className="w-full bg-secondary hover:bg-secondary/90 text-white text-lg disabled:opacity-60"
+              >
+                {isSubmitting ? "Đang gửi..." : "Gửi yêu cầu tư vấn"}
               </Button>
             </form>
           </motion.div>

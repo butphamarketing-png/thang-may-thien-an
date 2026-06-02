@@ -1,5 +1,6 @@
 import React from "react";
 import logoImg from "@assets/image_1780381253460.png";
+import { Link } from "wouter";
 
 export function Footer() {
   return (
@@ -18,10 +19,24 @@ export function Footer() {
           <div>
             <h4 className="font-bold text-lg mb-6 uppercase tracking-wider">Liên kết</h4>
             <ul className="space-y-3">
-              <li><a href="#home" className="text-white/70 hover:text-secondary transition-colors">Trang chủ</a></li>
-              <li><a href="#products" className="text-white/70 hover:text-secondary transition-colors">Sản phẩm</a></li>
-              <li><a href="#services" className="text-white/70 hover:text-secondary transition-colors">Dịch vụ</a></li>
-              <li><a href="#projects" className="text-white/70 hover:text-secondary transition-colors">Dự án</a></li>
+              <li>
+                <Link href="/"><a className="text-white/70 hover:text-secondary transition-colors">Trang chủ</a></Link>
+              </li>
+              <li>
+                <Link href="/san-pham"><a className="text-white/70 hover:text-secondary transition-colors">Sản phẩm</a></Link>
+              </li>
+              <li>
+                <Link href="/dich-vu"><a className="text-white/70 hover:text-secondary transition-colors">Dịch vụ</a></Link>
+              </li>
+              <li>
+                <Link href="/du-an"><a className="text-white/70 hover:text-secondary transition-colors">Dự án</a></Link>
+              </li>
+              <li>
+                <Link href="/kien-thuc"><a className="text-white/70 hover:text-secondary transition-colors">Kiến thức</a></Link>
+              </li>
+              <li>
+                <Link href="/lien-he"><a className="text-white/70 hover:text-secondary transition-colors">Liên hệ</a></Link>
+              </li>
             </ul>
           </div>
 
