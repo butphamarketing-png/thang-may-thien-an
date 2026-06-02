@@ -182,5 +182,18 @@ export const NEWS_POSTS: Post[] = [
       "Khi có tiếng ồn bất thường hoặc rung lắc, nên gọi kỹ thuật sớm.",
     ],
   },
+  {
+    slug: "chon-thang-may-phu-hop-nha-pho",
+    title: "Chọn thang máy phù hợp cho nhà phố 4–5 tầng",
+    excerpt:
+      "Gợi ý tải trọng, số điểm dừng và vật liệu cabin phù hợp diện tích và ngân sách.",
+    dateLabel: "18 Mar",
+    coverImage: galleryAt(34),
+    content: [
+      "Nhà phố thường dùng thang 300–450kg, 4–5 điểm dừng.",
+      "Ưu tiên cabin gọn, vận hành êm và tiết kiệm điện.",
+      "Nên khảo sát hiện trạng trước khi chốt báo giá.",
+    ],
+  },
 ];
 
