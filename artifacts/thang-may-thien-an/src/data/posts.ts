@@ -107,3 +107,32 @@ export const KNOWLEDGE_POSTS: Post[] = [
   },
 ];
 
+export const NEWS_POSTS: Post[] = [
+  {
+    slug: "thi-cong-an-toan-kiem-dinh",
+    title: "Thi công an toàn & kiểm định: 5 điểm cần lưu ý",
+    excerpt:
+      "Tổng hợp các điểm quan trọng trước khi bàn giao thang máy: an toàn, vận hành thử, nghiệm thu và kiểm định.",
+    dateLabel: "06 Apr",
+    coverImage: catalogueCover,
+    content: [
+      "Luôn kiểm tra hố thang, cửa tầng và hệ thống an toàn trước khi chạy thử.",
+      "Thiết lập quy trình nghiệm thu theo checklist, ghi nhận đầy đủ biên bản.",
+      "Thực hiện kiểm định theo quy định trước khi đưa vào sử dụng.",
+    ],
+  },
+  {
+    slug: "bao-tri-dinh-ky-nen-lam-gi",
+    title: "Bảo trì định kỳ nên làm gì để thang bền hơn?",
+    excerpt:
+      "Lịch bảo trì, các hạng mục kiểm tra và dấu hiệu cần gọi kỹ thuật ngay.",
+    dateLabel: "30 Jan",
+    coverImage: catalogueCover,
+    content: [
+      "Vệ sinh, kiểm tra tiếp điểm, cảm biến cửa và phanh an toàn.",
+      "Kiểm tra độ căng cáp, ray dẫn hướng, bôi trơn theo định kỳ.",
+      "Khi có tiếng ồn bất thường hoặc rung lắc, nên gọi kỹ thuật sớm.",
+    ],
+  },
+];
+

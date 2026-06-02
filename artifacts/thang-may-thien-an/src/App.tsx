@@ -19,6 +19,8 @@ import ContactPage from "@/pages/contact";
 import NotFound from "@/pages/not-found";
 import AdminLoginPage from "@/pages/admin/login";
 import AdminDashboardPage from "@/pages/admin";
+import NewsPage from "@/pages/news";
+import NewsDetailPage from "@/pages/news/detail";
 
 const queryClient = new QueryClient();
 
@@ -51,6 +53,9 @@ function App() {
 
               <Route path="/kien-thuc" component={KnowledgePage} />
               <Route path="/kien-thuc/:slug" component={KnowledgeDetailPage} />
+
+              <Route path="/tin-tuc" component={NewsPage} />
+              <Route path="/tin-tuc/:slug" component={NewsDetailPage} />
 
               <Route path="/lien-he" component={ContactPage} />
 

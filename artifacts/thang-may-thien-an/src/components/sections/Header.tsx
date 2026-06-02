@@ -28,6 +28,7 @@ export function Header() {
     { name: "Sản phẩm", href: "/san-pham" },
     { name: "Dịch vụ", href: "/dich-vu" },
     { name: "Dự án", href: "/du-an" },
+    { name: "Tin tức", href: "/tin-tuc" },
     { name: "Kiến thức", href: "/kien-thuc" },
     { name: "Liên hệ", href: "/lien-he" },
   ];

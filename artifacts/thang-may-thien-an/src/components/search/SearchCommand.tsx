@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut } from "@/components/ui/command";
 import { useLocation } from "wouter";
 import { PRODUCTS } from "@/data/products";
-import { SERVICE_POSTS, PROJECT_POSTS, KNOWLEDGE_POSTS } from "@/data/posts";
+import { SERVICE_POSTS, PROJECT_POSTS, KNOWLEDGE_POSTS, NEWS_POSTS } from "@/data/posts";
 
 type Action = { title: string; subtitle?: string; href: string; shortcut?: string };
 
@@ -46,6 +46,7 @@ export function SearchCommand({
         ...map(SERVICE_POSTS, "/dich-vu"),
         ...map(PROJECT_POSTS, "/du-an"),
         ...map(KNOWLEDGE_POSTS, "/kien-thuc"),
+        ...map(NEWS_POSTS, "/tin-tuc"),
       ];
     },
     [],
