@@ -8,9 +8,9 @@ export function ProductsSectionPreview() {
   return (
     <section className="py-24 bg-gray-50">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="flex items-end justify-between gap-6 mb-10">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 sm:gap-6 mb-10">
           <div>
-            <h2 className="text-3xl md:text-4xl font-bold text-primary uppercase">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary uppercase">
               Sản phẩm
             </h2>
             <div className="w-24 h-1 bg-secondary mt-3" />

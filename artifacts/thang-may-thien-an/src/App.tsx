@@ -4,6 +4,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Switch, Route } from "wouter";
 import { SiteLayout } from "@/layout/SiteLayout";
+import { ContentProtection } from "@/components/ContentProtection";
 import { AdminAuthProvider, useAdminAuth } from "@/auth/AdminAuth";
 
 import HomePage from "@/pages/home";
@@ -21,6 +22,7 @@ import AdminLoginPage from "@/pages/admin/login";
 import AdminDashboardPage from "@/pages/admin";
 import NewsPage from "@/pages/news";
 import NewsDetailPage from "@/pages/news/detail";
+import GalleryPage from "@/pages/gallery";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +39,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
+        <ContentProtection />
         <AdminAuthProvider>
           <SiteLayout>
             <Switch>
@@ -58,6 +61,7 @@ function App() {
               <Route path="/tin-tuc/:slug" component={NewsDetailPage} />
 
               <Route path="/lien-he" component={ContactPage} />
+              <Route path="/hinh-anh" component={GalleryPage} />
 
               <Route path="/admin/login" component={AdminLoginPage} />
               <Route

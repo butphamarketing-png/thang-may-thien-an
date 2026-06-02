@@ -43,8 +43,8 @@ export function Header() {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? "bg-primary/95 backdrop-blur-md shadow-md py-4"
-            : "bg-primary/60 backdrop-blur-sm py-6"
+            ? "bg-primary/95 backdrop-blur-md shadow-md py-3 md:py-4"
+            : "bg-primary/60 backdrop-blur-sm py-4 md:py-6"
         }`}
       >
       <div className="container mx-auto px-4 md:px-6">
@@ -54,7 +54,7 @@ export function Header() {
               <img
                 src={logoImg}
                 alt="Thang Máy Thiên Ân"
-                className="h-14 w-14 object-contain rounded-full"
+                className="h-11 w-11 sm:h-14 sm:w-14 object-contain rounded-full shrink-0"
               />
               <div className="hidden sm:block leading-tight">
                 <div className="text-white font-bold uppercase tracking-wide">
@@ -68,7 +68,7 @@ export function Header() {
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden xl:flex items-center gap-6 2xl:gap-8">
             {navLinks.map((link) => {
               if (link.name !== "Sản phẩm") {
                 return (
@@ -124,7 +124,7 @@ export function Header() {
           </nav>
 
           {/* Desktop Actions */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden xl:flex items-center gap-3 2xl:gap-4 shrink-0">
             <Button
               variant="outline"
               size="icon"
@@ -145,7 +145,8 @@ export function Header() {
 
           {/* Mobile Menu Toggle */}
           <button
-            className="md:hidden text-white"
+            className="xl:hidden text-white p-2 -mr-2"
+            aria-label={mobileMenuOpen ? "Đóng menu" : "Mở menu"}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? <X /> : <Menu />}
@@ -160,7 +161,7 @@ export function Header() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-primary border-t border-white/10"
+            className="xl:hidden bg-primary border-t border-white/10 max-h-[calc(100dvh-4.5rem)] overflow-y-auto"
           >
             <div className="flex flex-col px-4 py-6 gap-4">
               {navLinks.map((link) => {

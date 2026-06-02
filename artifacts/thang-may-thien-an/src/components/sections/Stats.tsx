@@ -12,7 +12,7 @@ export function Stats() {
   return (
     <section className="bg-primary text-white py-16 border-b border-white/10">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 divide-x divide-white/10">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 md:divide-x md:divide-white/10">
           {stats.map((stat, idx) => (
             <motion.div
               key={idx}
@@ -20,10 +20,12 @@ export function Stats() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1, duration: 0.6 }}
-              className="text-center px-4"
+              className="text-center px-2 sm:px-4"
             >
-              <div className="text-4xl md:text-5xl font-bold text-secondary mb-2">{stat.value}</div>
-              <div className="text-sm md:text-base text-white/80 uppercase tracking-wider">{stat.label}</div>
+              <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-secondary mb-2">{stat.value}</div>
+              <div className="text-xs sm:text-sm md:text-base text-white/80 uppercase tracking-wide sm:tracking-wider leading-snug">
+                {stat.label}
+              </div>
             </motion.div>
           ))}
         </div>

@@ -1,5 +1,7 @@
-import { MessageCircle, Phone } from "lucide-react";
+import type { CSSProperties, MouseEvent, ReactNode } from "react";
+import { CalendarClock, Facebook, MessageCircle, Phone } from "lucide-react";
 import { SITE_CONTACTS } from "@/config/site";
+import { cn } from "@/lib/utils";
 
 function ZaloIcon({ className }: { className?: string }) {
   return (
@@ -14,24 +16,34 @@ function CircleBtn({
   label,
   children,
   className,
+  shakeClass = "animate-float-ring-shake-delayed",
+  style,
+  onClick,
 }: {
   href: string;
   label: string;
-  children: React.ReactNode;
+  children: ReactNode;
   className: string;
+  shakeClass?: string;
+  style?: CSSProperties;
+  onClick?: (e: MouseEvent<HTMLAnchorElement>) => void;
 }) {
+  const external = href.startsWith("http");
   return (
     <a
       href={href}
-      target={href.startsWith("http") ? "_blank" : undefined}
-      rel={href.startsWith("http") ? "noreferrer" : undefined}
+      onClick={onClick}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noreferrer" : undefined}
       aria-label={label}
       title={label}
-      className={[
+      style={style}
+      className={cn(
         "grid place-items-center size-12 rounded-full border border-white/15 backdrop-blur-md shadow-xl",
-        "transition-all hover:scale-105 hover:shadow-2xl text-white",
+        "transition-transform hover:scale-110 hover:shadow-2xl text-white",
+        shakeClass,
         className,
-      ].join(" ")}
+      )}
     >
       {children}
     </a>
@@ -39,38 +51,86 @@ function CircleBtn({
 }
 
 export function FloatingContacts() {
+  const scrollToBooking = () => {
+    const el = document.getElementById("dat-hen");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
   return (
-    <div className="fixed right-4 bottom-4 z-40">
-      <div className="flex items-center gap-2 sm:gap-3">
+    <>
+      {/* Trái: Hotline rung */}
+      <div className="fixed z-40 left-2 sm:left-4 bottom-2 sm:bottom-4 safe-bottom">
+        <a
+          href={`tel:${SITE_CONTACTS.phone}`}
+          className={cn(
+            "animate-float-ring-shake group flex flex-col sm:flex-row items-center gap-0 sm:gap-2.5",
+            "rounded-full border border-white/12 bg-primary/95 backdrop-blur-md shadow-xl",
+            "p-2 sm:pl-2.5 sm:pr-4 sm:py-2 hover:ring-2 hover:ring-secondary/50 transition-shadow",
+          )}
+          aria-label={`Gọi hotline ${SITE_CONTACTS.phoneLabel}`}
+          title={`Gọi ${SITE_CONTACTS.phoneLabel}`}
+        >
+          <span className="grid place-items-center size-12 sm:size-11 rounded-full bg-secondary text-white shrink-0">
+            <Phone className="size-6 sm:size-5" />
+          </span>
+          <span className="hidden sm:inline text-white text-sm font-bold tracking-wide pr-1">
+            {SITE_CONTACTS.phoneLabel}
+          </span>
+          <span className="sm:hidden text-[10px] font-bold text-white mt-0.5 max-w-[3.5rem] text-center leading-tight">
+            Gọi ngay
+          </span>
+        </a>
+      </div>
+
+      {/* Phải: Zalo, Messenger, FB, Đặt hẹn — cột dọc */}
+      <div className="fixed z-40 right-2 sm:right-4 bottom-2 sm:bottom-4 safe-bottom flex flex-col items-center gap-2.5">
         <CircleBtn
           href={`https://zalo.me/${SITE_CONTACTS.zaloPhone}`}
           label="Chat Zalo"
-          className="bg-[#0068ff] hover:bg-[#0056d6] shadow-[#0068ff]/30"
+          className="bg-[#0068ff] hover:bg-[#0056d6] shadow-[#0068ff]/40"
+          shakeClass="animate-float-ring-shake-delayed"
         >
           <ZaloIcon className="size-6" />
         </CircleBtn>
 
-        <a
-          href={`tel:${SITE_CONTACTS.phone}`}
-          className="group flex items-center gap-2.5 rounded-full border border-white/12 bg-primary/95 backdrop-blur-md shadow-xl pl-2.5 pr-4 py-2 hover:ring-2 hover:ring-secondary/40 transition-all"
-          aria-label="Gọi hotline"
-        >
-          <span className="grid place-items-center size-11 rounded-full bg-secondary text-white shrink-0">
-            <Phone className="size-5" />
-          </span>
-          <span className="text-white text-sm font-bold tracking-wide hidden sm:inline">
-            {SITE_CONTACTS.phoneLabel}
-          </span>
-        </a>
-
         <CircleBtn
           href={`https://m.me/${SITE_CONTACTS.messengerPage}`}
           label="Messenger"
-          className="bg-gradient-to-br from-[#00b2ff] to-[#006aff] hover:opacity-95 shadow-blue-500/30"
+          className="bg-gradient-to-br from-[#00b2ff] to-[#006aff] shadow-blue-500/40"
+          shakeClass="animate-float-ring-shake-delayed"
+          style={{ animationDelay: "0.2s" }}
         >
           <MessageCircle className="size-6" />
         </CircleBtn>
+
+        <CircleBtn
+          href={`https://www.facebook.com/${SITE_CONTACTS.facebookPage}`}
+          label="Facebook"
+          className="bg-[#1877f2] hover:bg-[#166fe5] shadow-blue-600/40"
+          shakeClass="animate-float-ring-shake-delayed"
+          style={{ animationDelay: "0.35s" }}
+        >
+          <Facebook className="size-6" />
+        </CircleBtn>
+
+        <CircleBtn
+          href="/#dat-hen"
+          label="Đặt hẹn & báo giá"
+          className="bg-secondary hover:bg-secondary/90 text-white shadow-secondary/30"
+          shakeClass="animate-float-ring-shake-delayed"
+          style={{ animationDelay: "0.5s" }}
+          onClick={(e) => {
+            if (window.location.pathname === "/" || window.location.pathname === "") {
+              e.preventDefault();
+              scrollToBooking();
+            }
+          }}
+        >
+          <CalendarClock className="size-6" />
+        </CircleBtn>
       </div>
-    </div>
+    </>
   );
 }

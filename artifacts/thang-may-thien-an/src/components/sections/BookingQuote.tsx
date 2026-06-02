@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Calculator, CalendarClock, Sparkles } from "lucide-react";
+import { Calculator, CalendarClock, Settings2, Sparkles, UserRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -91,7 +91,7 @@ export function BookingQuote() {
     if (!canSubmit) {
       toast({
         title: "Vui lòng kiểm tra thông tin",
-        description: "Họ tên và số điện thoại là bắt buộc.",
+        description: "Họ tên và số điện thoại bên phải là bắt buộc.",
         variant: "destructive",
       });
       return;
@@ -120,46 +120,23 @@ export function BookingQuote() {
           dark
           align="left"
           title="Đặt hẹn & tính giá"
-          subtitle="Nhập thông số cơ bản để xem mức giá tham khảo ngay. Báo giá chính thức sẽ được xác nhận sau khảo sát công trình."
+          subtitle="Bên trái chọn thông số thang — bên phải nhập liên hệ và đặt lịch khảo sát. Giá tham khảo cập nhật ngay."
         />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-stretch">
-          {/* Form */}
+        <form
+          onSubmit={onSubmit}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-stretch"
+        >
+          {/* Trái: thông số thang */}
           <div className="luxury-glass-card p-6 md:p-8 h-full">
             <div className="flex items-center gap-2 text-secondary mb-6">
-              <CalendarClock className="w-5 h-5" />
+              <Settings2 className="w-5 h-5" />
               <span className="text-sm font-semibold uppercase tracking-wide">
-                Thông tin đặt hẹn
+                Thông số thang máy
               </span>
             </div>
 
-            <form onSubmit={onSubmit} className="space-y-5">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="luxury-label">Họ và tên *</label>
-                  <Input
-                    value={form.name}
-                    onChange={(e) => setForm((s) => ({ ...s, name: e.target.value }))}
-                    placeholder="Nguyễn Văn A"
-                    className={fieldClass}
-                  />
-                </div>
-                <div>
-                  <label className="luxury-label">Số điện thoại *</label>
-                  <Input
-                    value={form.phone}
-                    onChange={(e) =>
-                      setForm((s) => ({
-                        ...s,
-                        phone: e.target.value.replace(/[^\d+ ]/g, ""),
-                      }))
-                    }
-                    placeholder="09xx xxx xxx"
-                    className={fieldClass}
-                  />
-                </div>
-              </div>
-
+            <div className="space-y-5">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="luxury-label">Loại thang</label>
@@ -198,7 +175,7 @@ export function BookingQuote() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 min-[400px]:grid-cols-3 gap-3">
                 <div>
                   <label className="luxury-label">Số tầng</label>
                   <Input
@@ -249,9 +226,93 @@ export function BookingQuote() {
                 </div>
               </div>
 
+              <div className="rounded-xl border border-white/10 bg-white/[0.04] p-4 flex gap-3">
+                <Sparkles className="w-5 h-5 text-secondary shrink-0 mt-0.5" />
+                <p className="text-white/75 text-sm leading-relaxed">
+                  Nhà phố 4 tầng thường dùng 4–5 điểm dừng, tải trọng 300–450kg. Thay đổi bên
+                  trái để xem giá tham khảo bên phải.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Phải: giá + nhập liên hệ */}
+          <div className="luxury-glass-card p-6 md:p-8 h-full flex flex-col border-secondary/20">
+            <div className="flex items-center gap-2 text-secondary mb-4">
+              <Calculator className="w-5 h-5" />
+              <span className="text-sm font-semibold uppercase tracking-wide">
+                Bảng tính giá tham khảo
+              </span>
+            </div>
+
+            <div className="rounded-2xl border border-secondary/25 bg-gradient-to-br from-secondary/15 via-transparent to-transparent p-5 mb-5">
+              <div className="text-white/70 text-sm">Khoảng giá ước tính</div>
+              <div className="mt-2 text-2xl md:text-3xl font-extrabold leading-tight gold-text">
+                {estimate ? (
+                  <>
+                    {formatVnd(estimate.low)}
+                    <span className="text-white/50 font-normal text-xl"> – </span>
+                    {formatVnd(estimate.high)}
+                  </>
+                ) : (
+                  "—"
+                )}
+              </div>
+              {estimate && form.elevatorType ? (
+                <div className="mt-3 grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-white/65">
+                  <span>{typeLabels[form.elevatorType]}</span>
+                  <span className="text-right">
+                    {form.floors} tầng · {form.stops} điểm
+                  </span>
+                  <span>{form.loadKg} kg · {materialLabels[form.material]}</span>
+                  {estimate.stopCost > 0 ? (
+                    <span className="text-right text-secondary">
+                      +{formatVnd(estimate.stopCost)} điểm dừng
+                    </span>
+                  ) : null}
+                </div>
+              ) : null}
+            </div>
+
+            <div className="flex items-center gap-2 text-secondary mb-4 pt-2 border-t border-white/10">
+              <UserRound className="w-5 h-5" />
+              <span className="text-sm font-semibold uppercase tracking-wide">
+                Thông tin liên hệ & đặt hẹn
+              </span>
+            </div>
+
+            <div className="space-y-4 flex-1">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="luxury-label">Ngày hẹn</label>
+                  <label className="luxury-label">Họ và tên *</label>
+                  <Input
+                    value={form.name}
+                    onChange={(e) => setForm((s) => ({ ...s, name: e.target.value }))}
+                    placeholder="Nguyễn Văn A"
+                    className={fieldClass}
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="luxury-label">Số điện thoại *</label>
+                  <Input
+                    value={form.phone}
+                    onChange={(e) =>
+                      setForm((s) => ({
+                        ...s,
+                        phone: e.target.value.replace(/[^\d+ ]/g, ""),
+                      }))
+                    }
+                    placeholder="09xx xxx xxx"
+                    className={fieldClass}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="luxury-label">Ngày hẹn khảo sát</label>
                   <Input
                     value={form.date}
                     onChange={(e) => setForm((s) => ({ ...s, date: e.target.value }))}
@@ -275,106 +336,32 @@ export function BookingQuote() {
                 <Input
                   value={form.address}
                   onChange={(e) => setForm((s) => ({ ...s, address: e.target.value }))}
-                  placeholder="Quận, TP.HCM"
+                  placeholder="Số nhà, quận, TP.HCM"
                   className={fieldClass}
                 />
               </div>
 
               <div>
-                <label className="luxury-label">Ghi chú</label>
+                <label className="luxury-label">Ghi chú thêm</label>
                 <Textarea
                   value={form.note}
                   onChange={(e) => setForm((s) => ({ ...s, note: e.target.value }))}
                   placeholder="Kích thước hố thang, yêu cầu thẩm mỹ..."
-                  className={`${fieldClass} min-h-[96px] resize-none`}
+                  className={`${fieldClass} min-h-[88px] resize-none`}
                 />
               </div>
+            </div>
 
-              <Button
-                type="submit"
-                disabled={!canSubmit}
-                className="w-full h-12 bg-secondary hover:bg-secondary/90 text-white font-semibold text-base shadow-lg shadow-secondary/20"
-              >
-                {submitting ? "Đang gửi..." : "Đặt hẹn & nhận báo giá chi tiết"}
-              </Button>
-            </form>
+            <Button
+              type="submit"
+              disabled={!canSubmit}
+              className="w-full h-12 mt-6 bg-secondary hover:bg-secondary/90 text-white font-semibold text-base shadow-lg shadow-secondary/20"
+            >
+              <CalendarClock className="w-5 h-5 mr-2 inline" />
+              {submitting ? "Đang gửi..." : "Đặt hẹn & nhận báo giá chi tiết"}
+            </Button>
           </div>
-
-          {/* Price panel */}
-          <div className="luxury-glass-card p-6 md:p-8 h-full flex flex-col border-secondary/20">
-            <div className="flex items-center gap-2 text-secondary mb-6">
-              <Calculator className="w-5 h-5" />
-              <span className="text-sm font-semibold uppercase tracking-wide">
-                Bảng tính giá tham khảo
-              </span>
-            </div>
-
-            <div className="rounded-2xl border border-secondary/25 bg-gradient-to-br from-secondary/15 via-transparent to-transparent p-6 mb-6">
-              <div className="text-white/70 text-sm">Khoảng giá ước tính</div>
-              <div className="mt-2 text-2xl md:text-3xl font-extrabold leading-tight gold-text">
-                {estimate ? (
-                  <>
-                    {formatVnd(estimate.low)}
-                    <span className="text-white/50 font-normal text-xl"> – </span>
-                    {formatVnd(estimate.high)}
-                  </>
-                ) : (
-                  "—"
-                )}
-              </div>
-              <p className="mt-3 text-white/60 text-xs">
-                Giá thay đổi theo lựa chọn bên trái
-              </p>
-            </div>
-
-            {estimate && form.elevatorType ? (
-              <div className="space-y-3 text-sm flex-1">
-                <div className="flex justify-between py-2 border-b border-white/10">
-                  <span className="text-white/65">Loại thang</span>
-                  <span className="text-white font-medium">{typeLabels[form.elevatorType]}</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-white/10">
-                  <span className="text-white/65">Tầng / điểm dừng</span>
-                  <span className="text-white font-medium">
-                    {form.floors} tầng · {form.stops} điểm
-                  </span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-white/10">
-                  <span className="text-white/65">Tải trọng</span>
-                  <span className="text-white font-medium">{form.loadKg} kg</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-white/10">
-                  <span className="text-white/65">Vật liệu</span>
-                  <span className="text-white font-medium">
-                    {materialLabels[form.material]}
-                  </span>
-                </div>
-                {estimate.stopCost > 0 ? (
-                  <div className="flex justify-between py-2 border-b border-white/10">
-                    <span className="text-white/65">Phụ thu điểm dừng</span>
-                    <span className="text-secondary font-medium">+{formatVnd(estimate.stopCost)}</span>
-                  </div>
-                ) : null}
-                {estimate.materialCost > 0 ? (
-                  <div className="flex justify-between py-2">
-                    <span className="text-white/65">Phụ thu vật liệu</span>
-                    <span className="text-secondary font-medium">
-                      +{formatVnd(estimate.materialCost)}
-                    </span>
-                  </div>
-                ) : null}
-              </div>
-            ) : null}
-
-            <div className="mt-auto rounded-xl border border-white/10 bg-white/[0.04] p-4 flex gap-3">
-              <Sparkles className="w-5 h-5 text-secondary shrink-0 mt-0.5" />
-              <p className="text-white/75 text-sm leading-relaxed">
-                Nhà phố 4 tầng thường dùng 4–5 điểm dừng, tải trọng 300–450kg, vật liệu tiêu chuẩn
-                hoặc inox cao cấp.
-              </p>
-            </div>
-          </div>
-        </div>
+        </form>
       </div>
     </section>
   );

@@ -20,7 +20,7 @@ export function SectionHeader({
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className={`text-3xl md:text-4xl font-bold uppercase tracking-wide ${
+        className={`text-2xl sm:text-3xl md:text-4xl font-bold uppercase tracking-wide ${
           dark ? "text-white" : "text-primary"
         }`}
       >

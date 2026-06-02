@@ -5,10 +5,11 @@ import { FloatingContacts } from "@/components/floating/FloatingContacts";
 
 export function SiteLayout({ children }: PropsWithChildren) {
   return (
-    <div className="min-h-screen flex flex-col w-full">
+    <div className="min-h-screen flex flex-col w-full overflow-x-hidden">
       <Header />
-      {/* header is fixed */}
-      <main className="flex-1 pt-24 md:pt-28">{children}</main>
+      <main className="flex-1 pt-[4.5rem] sm:pt-24 md:pt-28 pb-28 sm:pb-24 md:pb-8 overflow-x-hidden w-full">
+        {children}
+      </main>
       <FloatingContacts />
       <Footer />
     </div>

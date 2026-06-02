@@ -22,7 +22,7 @@ export function HeroSlideshow() {
   }, [slides.length]);
 
   return (
-    <section className="relative h-[92vh] md:h-screen overflow-hidden bg-black">
+    <section className="relative h-[min(92vh,900px)] sm:h-[88vh] md:h-screen overflow-hidden bg-black">
       <AnimatePresence mode="wait">
         <motion.img
           key={slides[index]?.src + index}

@@ -40,7 +40,7 @@ export function CatalogueDialog({ className }: { className?: string }) {
           Catalogue
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-5xl p-0 overflow-hidden">
+      <DialogContent className="w-[min(100vw-1rem,64rem)] max-w-[95vw] max-h-[92dvh] p-0 overflow-hidden flex flex-col">
         <DialogHeader className="p-6 pb-0">
           <DialogTitle>Catalogue</DialogTitle>
         </DialogHeader>
@@ -86,7 +86,7 @@ export function CatalogueDialog({ className }: { className?: string }) {
                     <img
                       src={direction === "next" ? nextLeft : prevLeft}
                       alt="Catalogue left page"
-                      className="w-full h-[70vh] object-contain bg-black"
+                      className="w-full h-[38vh] sm:h-[50vh] md:h-[62vh] object-contain bg-black"
                     />
                     {/* inner gutter shadow */}
                     <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-black/55 via-black/15 to-transparent" />
@@ -97,7 +97,7 @@ export function CatalogueDialog({ className }: { className?: string }) {
                     <img
                       src={direction === "next" ? nextRight : prevRight}
                       alt="Catalogue right page"
-                      className="w-full h-[70vh] object-contain bg-black"
+                      className="w-full h-[38vh] sm:h-[50vh] md:h-[62vh] object-contain bg-black"
                     />
                     <div className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-black/55 via-black/15 to-transparent" />
                     <div className="pointer-events-none absolute inset-0 ring-1 ring-white/8" />
@@ -115,7 +115,7 @@ export function CatalogueDialog({ className }: { className?: string }) {
                     <img
                       src={currentLeft}
                       alt="Catalogue left page"
-                      className="w-full h-[70vh] object-contain bg-black"
+                      className="w-full h-[38vh] sm:h-[50vh] md:h-[62vh] object-contain bg-black"
                     />
                     <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-black/55 via-black/15 to-transparent" />
                     <div className="pointer-events-none absolute inset-0 ring-1 ring-white/10" />
@@ -129,7 +129,7 @@ export function CatalogueDialog({ className }: { className?: string }) {
                         <img
                           src={currentRight}
                           alt="Catalogue right page"
-                          className="w-full h-[70vh] object-contain bg-black"
+                          className="w-full h-[38vh] sm:h-[50vh] md:h-[62vh] object-contain bg-black"
                         />
                         <div className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-black/55 via-black/15 to-transparent" />
                         <div className="pointer-events-none absolute inset-0 ring-1 ring-white/10" />
@@ -154,7 +154,7 @@ export function CatalogueDialog({ className }: { className?: string }) {
                           <img
                             src={currentRight}
                             alt="Turning page"
-                            className="w-full h-[70vh] object-contain bg-black"
+                            className="w-full h-[38vh] sm:h-[50vh] md:h-[62vh] object-contain bg-black"
                           />
                           {/* page shading + curl */}
                           <div className="pointer-events-none absolute inset-0 bg-gradient-to-l from-black/80 via-black/15 to-transparent opacity-85" />
@@ -167,7 +167,7 @@ export function CatalogueDialog({ className }: { className?: string }) {
                           <img
                             src={nextLeft}
                             alt="Turning page back"
-                            className="w-full h-[70vh] object-contain bg-black"
+                            className="w-full h-[38vh] sm:h-[50vh] md:h-[62vh] object-contain bg-black"
                           />
                           <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/80 via-black/15 to-transparent opacity-85" />
                           <div className="pointer-events-none absolute inset-y-0 left-0 w-[10px] bg-white/10" />
@@ -203,7 +203,7 @@ export function CatalogueDialog({ className }: { className?: string }) {
                           <img
                             src={currentLeft}
                             alt="Turning page"
-                            className="w-full h-[70vh] object-contain bg-black"
+                            className="w-full h-[38vh] sm:h-[50vh] md:h-[62vh] object-contain bg-black"
                           />
                           <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/80 via-black/15 to-transparent opacity-85" />
                           <div className="pointer-events-none absolute inset-y-0 left-0 w-[10px] bg-white/10" />
@@ -215,7 +215,7 @@ export function CatalogueDialog({ className }: { className?: string }) {
                           <img
                             src={prevRight}
                             alt="Turning page back"
-                            className="w-full h-[70vh] object-contain bg-black"
+                            className="w-full h-[38vh] sm:h-[50vh] md:h-[62vh] object-contain bg-black"
                           />
                           <div className="pointer-events-none absolute inset-0 bg-gradient-to-l from-black/80 via-black/15 to-transparent opacity-85" />
                           <div className="pointer-events-none absolute inset-y-0 right-0 w-[10px] bg-white/10" />

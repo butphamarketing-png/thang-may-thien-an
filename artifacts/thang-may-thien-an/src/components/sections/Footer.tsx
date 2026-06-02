@@ -60,8 +60,8 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between">
-          <p className="text-white/50 text-sm">
+        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between text-center md:text-left gap-4">
+          <p className="text-white/50 text-xs sm:text-sm leading-relaxed max-w-xl">
             © 2026 Thang Máy Thiên Ân. All rights reserved. Design by Butphamarketing.com
           </p>
         </div>

@@ -12,7 +12,7 @@ import { GalleryShowcase } from "@/components/sections/GalleryShowcase";
 export default function HomePage() {
   return (
     <>
-      <div className="-mt-24 md:-mt-28">
+      <div className="-mt-[4.5rem] sm:-mt-24 md:-mt-28">
         <HeroSlideshow />
       </div>
       <Stats />
