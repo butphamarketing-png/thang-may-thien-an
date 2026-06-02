@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, Search } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import logoImg from "@assets/image_1780381253460.png";
 import { Link, useLocation } from "wouter";
 import { PRODUCTS } from "@/data/products";
 import { CatalogueDialog } from "@/components/catalogue/CatalogueDialog";
+import { SearchCommand } from "@/components/search/SearchCommand";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const [location, setLocation] = useLocation();
 
   useEffect(() => {
@@ -36,13 +38,14 @@ export function Header() {
   }, [location]);
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-primary/95 backdrop-blur-md shadow-md py-4"
-          : "bg-primary/60 backdrop-blur-sm py-6"
-      }`}
-    >
+    <>
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isScrolled
+            ? "bg-primary/95 backdrop-blur-md shadow-md py-4"
+            : "bg-primary/60 backdrop-blur-sm py-6"
+        }`}
+      >
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between">
           <Link href="/">
@@ -121,6 +124,16 @@ export function Header() {
 
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center gap-4">
+            <Button
+              variant="outline"
+              size="icon"
+              className="border-white/25 text-white hover:bg-white/10 bg-transparent"
+              onClick={() => setSearchOpen(true)}
+              aria-label="Tìm kiếm"
+              title="Tìm kiếm (Ctrl+K)"
+            >
+              <Search className="w-4 h-4" />
+            </Button>
             <CatalogueDialog />
             <Link href="/lien-he">
               <Button className="bg-secondary hover:bg-secondary/90 text-white font-semibold">
@@ -196,6 +209,8 @@ export function Header() {
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+      </header>
+      <SearchCommand open={searchOpen} onOpenChange={setSearchOpen} />
+    </>
   );
 }
