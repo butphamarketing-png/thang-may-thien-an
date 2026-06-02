@@ -1,4 +1,5 @@
 import React from "react";
+import logoImg from "@assets/image_1780381253460.png";
 
 export function Footer() {
   return (
@@ -6,8 +7,8 @@ export function Footer() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           <div className="space-y-6">
-            <div className="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
-              <span className="text-secondary">THIÊN ÂN</span>
+            <div className="flex items-center">
+              <img src={logoImg} alt="Thang Máy Thiên Ân" className="h-16 w-16 object-contain rounded-full" />
             </div>
             <p className="text-white/70 text-sm leading-relaxed">
               Giải pháp thang máy toàn diện. An toàn, chuyên nghiệp, uy tín hàng đầu tại TP.HCM và các tỉnh lân cận.

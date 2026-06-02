@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Phone, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import logoImg from "@assets/image_1780381253460.png";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -31,8 +32,8 @@ export function Header() {
     >
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between">
-          <a href="#home" className="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
-            <span className="text-secondary">THIÊN ÂN</span>
+          <a href="#home" className="flex items-center">
+            <img src={logoImg} alt="Thang Máy Thiên Ân" className="h-14 w-14 object-contain rounded-full" />
           </a>
 
           {/* Desktop Nav */}
