@@ -1,0 +1,56 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "0AJR1QI3TginbheivgyI3"
+uri = "file://artifacts/thang-may-thien-an/public/images/hero.png"
+type = "image"
+title = "Hero background glass elevator"
+
+[[generated]]
+id = "CPVhR-f17XqL2iyaVgpkW"
+uri = "file://artifacts/thang-may-thien-an/public/images/product-home.png"
+type = "image"
+title = "Home elevator modern interior"
+
+[[generated]]
+id = "WEyFknXCR3ihRx4imHbrt"
+uri = "file://artifacts/thang-may-thien-an/public/images/product-commercial.png"
+type = "image"
+title = "Commercial passenger elevator"
+
+[[generated]]
+id = "VYiOa-uHAtLnjei2HtlBT"
+uri = "file://artifacts/thang-may-thien-an/public/images/product-freight.png"
+type = "image"
+title = "Industrial freight elevator"
+
+[[generated]]
+id = "uVyWdRPXlJJKYmeBzoeK8"
+uri = "file://artifacts/thang-may-thien-an/public/images/product-escalator.png"
+type = "image"
+title = "Modern escalator shopping mall"
+
+[[generated]]
+id = "Da49t7qMIJDis4P29J3vF"
+uri = "file://artifacts/thang-may-thien-an/public/images/project-1.png"
+type = "image"
+title = "Modern building project"
+
+[[generated]]
+id = "6vs5kZiOATwYZbeFnulg_"
+uri = "file://artifacts/thang-may-thien-an/public/images/project-2.png"
+type = "image"
+title = "Luxury lobby project"
+
+[[generated]]
+id = "HoQO3n3P5-M8dzK0y6z_X"
+uri = "file://artifacts/thang-may-thien-an/public/images/project-3.png"
+type = "image"
+title = "Villa elevator project"
+
+[[generated]]
+id = "-GLRSVARvOZKuNFa6cJsZ"
+uri = "file://artifacts/thang-may-thien-an/public/images/project-4.png"
+type = "image"
+title = "Corporate office elevator"
