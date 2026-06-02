@@ -62,7 +62,7 @@ export function Footer() {
 
         <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between">
           <p className="text-white/50 text-sm">
-            © 2024 Thang Máy Thiên Ân. All rights reserved.
+            © 2026 Thang Máy Thiên Ân. All rights reserved. Design by Butphamarketing.com
           </p>
         </div>
       </div>

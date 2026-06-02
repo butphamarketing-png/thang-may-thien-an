@@ -10,8 +10,10 @@ type QuoteForm = {
   name: string;
   phone: string;
   elevatorType: "home" | "commercial" | "freight" | "escalator" | "";
+  floors: number;
   stops: number;
   loadKg: number;
+  material: "standard" | "premium" | "glass" | "";
   date: string; // yyyy-mm-dd
   time: string; // hh:mm
   address: string;
@@ -34,18 +36,30 @@ function estimatePrice(form: QuoteForm) {
 
   const base = baseByType[form.elevatorType];
 
-  // Stops factor (first 3 stops included)
-  const extraStops = Math.max(0, form.stops - 3);
+  // Floors/stops factor
+  const floors = Math.max(1, form.floors || 1);
+  const stops = Math.max(2, form.stops || 2);
+  const effectiveStops = Math.max(stops, floors); // keep sane when user inputs mismatch
+
+  const extraStops = Math.max(0, effectiveStops - 3);
   const stopCost = extraStops * 22_000_000;
 
   // Load factor (reference 350kg)
   const loadDelta = Math.max(0, form.loadKg - 350);
   const loadCost = Math.ceil(loadDelta / 50) * 6_000_000;
 
+  // Material factor
+  const materialCost =
+    form.material === "premium"
+      ? 28_000_000
+      : form.material === "glass"
+        ? 55_000_000
+        : 0;
+
   // Site conditions placeholder factor
   const conditionCost = form.address.trim() ? 0 : 0;
 
-  const estimate = base + stopCost + loadCost + conditionCost;
+  const estimate = base + stopCost + loadCost + materialCost + conditionCost;
 
   // Display as a range ±7%
   const low = Math.round(estimate * 0.93 / 1_000_000) * 1_000_000;
@@ -60,8 +74,10 @@ export function BookingQuote() {
     name: "",
     phone: "",
     elevatorType: "home",
+    floors: 4,
     stops: 4,
     loadKg: 350,
+    material: "standard",
     date: "",
     time: "",
     address: "",
@@ -102,7 +118,7 @@ export function BookingQuote() {
   }
 
   return (
-    <section className="py-24 bg-gradient-to-b from-primary via-primary to-[#071427] text-white">
+    <section className="py-24 bg-[radial-gradient(1200px_700px_at_50%_0%,rgba(255,255,255,0.08),rgba(0,0,0,0)_55%),linear-gradient(180deg,#081a2f_0%,#071427_100%)] text-white">
       <div className="container mx-auto px-4 md:px-6">
         <div className="max-w-3xl">
           <motion.h2
@@ -120,8 +136,8 @@ export function BookingQuote() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-12">
-          <Card className="lg:col-span-2 bg-white/8 border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-12">
+          <Card className="bg-white/7 border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
             <CardContent className="p-8">
               <form onSubmit={onSubmit} className="space-y-5">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -144,7 +160,7 @@ export function BookingQuote() {
                   />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <select
                     value={form.elevatorType}
                     onChange={(e) =>
@@ -161,17 +177,49 @@ export function BookingQuote() {
                     <option value="escalator">Thang cuốn</option>
                   </select>
 
+                  <select
+                    value={form.material}
+                    onChange={(e) =>
+                      setForm((s) => ({
+                        ...s,
+                        material: e.target.value as QuoteForm["material"],
+                      }))
+                    }
+                    className="flex h-10 w-full rounded-md border border-white/15 bg-white/10 px-3 py-2 text-sm text-white ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  >
+                    <option value="standard">Vật liệu tiêu chuẩn</option>
+                    <option value="premium">Inox/hoàn thiện cao cấp</option>
+                    <option value="glass">Thang kính</option>
+                  </select>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <Input
+                    value={String(form.floors)}
+                    onChange={(e) =>
+                      setForm((s) => ({
+                        ...s,
+                        floors: Math.max(1, Math.min(30, Number(e.target.value || 0))),
+                      }))
+                    }
+                    type="number"
+                    min={1}
+                    max={30}
+                    placeholder="Số tầng"
+                    className="bg-white/10 border-white/15 text-white placeholder:text-white/50"
+                  />
+
                   <Input
                     value={String(form.stops)}
                     onChange={(e) =>
                       setForm((s) => ({
                         ...s,
-                        stops: Math.max(2, Math.min(20, Number(e.target.value || 0))),
+                        stops: Math.max(2, Math.min(30, Number(e.target.value || 0))),
                       }))
                     }
                     type="number"
                     min={2}
-                    max={20}
+                    max={30}
                     placeholder="Số điểm dừng"
                     className="bg-white/10 border-white/15 text-white placeholder:text-white/50"
                   />
@@ -232,7 +280,7 @@ export function BookingQuote() {
             </CardContent>
           </Card>
 
-          <Card className="bg-white/8 border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
+          <Card className="bg-white/7 border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
             <CardContent className="p-8">
               <div className="text-white/80 text-sm">Khoảng giá tham khảo</div>
               <div className="mt-3 text-3xl font-extrabold tracking-tight">
@@ -246,7 +294,7 @@ export function BookingQuote() {
                 )}
               </div>
               <div className="mt-4 space-y-2 text-white/75 text-sm">
-                <div>• Bao gồm ước tính theo loại thang, điểm dừng, tải trọng.</div>
+                <div>• Bao gồm ước tính theo loại thang, tầng/điểm dừng, tải trọng, vật liệu.</div>
                 <div>• Chưa bao gồm phát sinh theo điều kiện công trình.</div>
                 <div>• Kỹ sư sẽ liên hệ xác nhận lịch hẹn và khảo sát.</div>
               </div>
